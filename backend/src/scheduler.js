@@ -2,7 +2,7 @@ const cron = require("node-cron");
 const Student = require("./models/Student");
 const Event = require("./models/Event");
 const Lecture = require("./models/Lecture");
-const { sendWhatsAppMessage } = require("./services/twilioService");
+const { sendWhatsAppMessage } = require("./services/whatsappService");
 
 // Weekly event update (every Sunday at 9:00 AM)
 const weeklyEventUpdate = cron.schedule(
@@ -19,7 +19,7 @@ const weeklyEventUpdate = cron.schedule(
         .join("\n")}`;
 
       for (const student of students) {
-        await sendWhatsAppMessage(student.phoneNumber, message);
+        await sendWhatsAppMessage();
       }
       console.log("Weekly event update sent successfully");
     } catch (error) {
@@ -33,7 +33,7 @@ const weeklyEventUpdate = cron.schedule(
 
 // Daily lecture reminder (every day at 8:00 AM)
 const dailyLectureReminder = cron.schedule(
-  "58 8 * * *",
+  "11 22 * * *",
   async () => {
     console.log("Running a task every day at 8 AM");
 
@@ -57,7 +57,7 @@ const dailyLectureReminder = cron.schedule(
         .join("\n")}`;
 
       for (const student of students) {
-        await sendWhatsAppMessage(student.phoneNumber, message);
+        await sendWhatsAppMessage();
       }
       console.log("Daily lecture reminder sent successfully");
     } catch (error) {
